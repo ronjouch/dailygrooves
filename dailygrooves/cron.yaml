@@ -1,0 +1,5 @@
+cron:
+- description: daily fetch
+  url: /cronfetch
+  schedule: every day 01:00
+  timezone: US/Eastern

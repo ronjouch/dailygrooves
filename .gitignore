@@ -29,7 +29,19 @@ nosetests.xml
 # Translations
 *.mo
 
-# Mr Developer
-.mr.developer.cfg
+# Eclipse
+__pycache__
+.settings
 .project
 .pydevproject
+
+# google-api-python-client-gae-x.y
+apiclient
+httplib2
+oauth2client
+uritemplate
+gflags.py
+gflags_validators.py
+
+# file containing your GAE developer API key & secrets.
+client_secrets.json
