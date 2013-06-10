@@ -69,6 +69,7 @@ class CronFetchHandler(RequestHandler):
     '''
 
     def get(self):
+        print "CronFetchHandler:get"
         user_id = GaeUser.all().order('-date').get().id
         query_string = urlencode({'user_id': user_id})
         taskqueue.add(url='/fetchworker?' + query_string, method='GET')
@@ -92,6 +93,7 @@ class FetchWorker(RequestHandler):
         self.videos = []
 
     def get(self):
+        print "FetchWorker:get"
         self.crawl_videos()
         shuffle(self.videos)
         self.create_playlist()
@@ -127,15 +129,20 @@ class FetchWorker(RequestHandler):
 
             self.videos = videos
 
+        print "crawl_videos end"
+
     def create_playlist(self):
         '''
         Creates a new playlist on YouTube and persist it as a Playlist
         instance in datastore.
         '''
 
+        print "create_playlist start"
         credentials = StorageByKeyName(
             CredentialsModel, self.user_id, 'credentials').get()
+        print "create_playlist got creds"
         http = credentials.authorize(Http())
+        print "create_playlist authorized creds"
         request = YOUTUBE.playlists().insert(
             part="snippet,status",
                 body=dict(
@@ -149,6 +156,7 @@ class FetchWorker(RequestHandler):
                 )
             )
         response = request.execute(http=http)
+        print "create_playlist executed req"
         self.playlist_id = response["id"]
 
         playlist = Playlist(id=self.playlist_id, date=datetime.now())
