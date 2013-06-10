@@ -52,6 +52,9 @@ class FetchHandler(RequestHandler):
 
     @DECORATOR.oauth_required
     def get(self):
+        # approval_prompt=force required to force getting a refresh_token
+        # that will be used in cron in offline mode
+        DECORATOR.flow.params.update({'approval_prompt': 'force'})
         user_id = users.get_current_user().user_id()
         gae_user = GaeUser(id=user_id, date=datetime.now())
         gae_user.put()
