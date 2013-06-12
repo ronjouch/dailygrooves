@@ -31,10 +31,6 @@ handlers:
   static_files: \1
   upload: (.*\.(gif|png|jpg|css|ico)$)
 
-#- url: /(.*)
-#  static_files: index.html
-#  upload: index.html
-
 libraries:
 - name: webapp2
   version: latest
