@@ -11,13 +11,14 @@ from webapp2 import RequestHandler, WSGIApplication
 
 from apiclient.discovery import build
 from apiclient.errors import HttpError
-from google.appengine.api import taskqueue
-from google.appengine.api import users
+from google.appengine.api import taskqueue, users
 from google.appengine.ext import db
 from oauth2client.client import AccessTokenRefreshError
-from oauth2client.appengine import CredentialsModel
-from oauth2client.appengine import OAuth2DecoratorFromClientSecrets
-from oauth2client.appengine import StorageByKeyName
+from oauth2client.appengine import CredentialsModel, StorageByKeyName
+# from oauth2client.appengine import OAuth2DecoratorFromClientSecrets
+
+from appengine_override import \
+    OAuth2DecoratorFromClientSecrets_ApprovalPromptForce
 
 CLIENT_SECRETS = join(dirname(__file__), 'client_secrets.json')
 YOUTUBE_RW_SCOPE = "https://www.googleapis.com/auth/youtube"
@@ -25,7 +26,12 @@ YOUTUBE_API_SERVICE_NAME = "youtube"
 YOUTUBE_API_VERSION = "v3"
 YOUTUBE_MAX_VIDEOS_PER_PLAYLIST = 200
 YOUTUBE = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION)
-DECORATOR = OAuth2DecoratorFromClientSecrets(CLIENT_SECRETS, YOUTUBE_RW_SCOPE)
+# I'd like to use OAuth2DecoratorFromClientSecrets, but it fails to forward/
+# honor additional **kwargs like approval_prompt='force', and it *has* to be
+# set at init time, so I built this slightly modified version, which just
+# adds one parameter. Better ways to do that very welcome.
+DECORATOR = OAuth2DecoratorFromClientSecrets_ApprovalPromptForce(\
+                                            CLIENT_SECRETS, YOUTUBE_RW_SCOPE)
 
 SOURCE_URLS = open(join(dirname(__file__), 'SOURCE_URLS')).readlines()
 TEST_VIDEOS = ['T4z4OrPmZgA', '7mpBD1Gi_0E', 'GsrZk99s9LY', 'OE4zVYm80n4']
@@ -52,9 +58,6 @@ class FetchHandler(RequestHandler):
 
     @DECORATOR.oauth_required
     def get(self):
-        # approval_prompt=force required to force getting a refresh_token
-        # that will be used in cron in offline mode
-        DECORATOR.flow.params.update({'approval_prompt': 'force'})
         user_id = users.get_current_user().user_id()
         gae_user = GaeUser(id=user_id, date=datetime.now())
         gae_user.put()
