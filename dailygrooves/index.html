@@ -4,7 +4,7 @@
 	<head>
         <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
         <meta name="description" content="Daily Grooves"/>
-        <meta name="keywords" content="music discovery serenpidity randomness"/>
+        <meta name="keywords" content="music discovery daily serendipity randomness"/>
         <meta name="author" content="ronan@jouchet.fr"/> 
         <title>Daily Grooves</title>
 		<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QIQFjAHESTdPAAAAj5JREFUOMuNk19IU2EYxn/nfGdu0zlbc2kprcRkNwkVBdF/KAWjvMoMK+oiMCnqpjv7g3jjXTfGiNQuKkuQCguMoKAoULLASktQshxSmrrNs3nOced0kYnhXH2XD8/78Hu+7/0EKU5b/fFzuS7XYPfnb7GlPHKqgF3rxMbybb6DqTxSMvHdtUq8bnu+N8vRpwhJt5cFfYD1T4Kr1XsA2FBzV5JkqSndactMSxPe0J0Tt/+rwvngcwD6mo425mVnlGABlkRudkbFQMuxkwCPL+9PXeF9sLIqsMbdokiWDWuOWpLQDMyn3aP+A3WPRpYkaK8tzVnpkeuUWdWGZYKpgTYFegS7HJO3Blw9KSts8tvLlzv0AvRJWL0bNl8Adz6oIdDCeF36iv7GsgaAztodAIiFAZcqCpqdYiYHIwL+EsjbDv59oKRD6CWYCTLT5Qwt7r5Vc6PLWEQQj6nFGNHf2MI5119A4Ahm8VkwoiQ01bdzfVr+nxllYYCwNNCnQZ+ChDqva2ODWJ/acBgRFMs5I0zUpHcQV6MPmI2CMQ7xUQDCrxuRW4twfO8AY5JwdHq8rOHtSNKA/lDsSkwNm5g65lAn0617yXpzBpswwdSZ1cOJ3mGjDqC6NPD3HtRXBOjo90jXyz9UFXnVmw7FFPMOCSJxJTERtx1eezHeblkgzU3Ov8Kzj+OEfowQfKH3ftWLmresUjUhLAVLHh786bz/ZMBz6MvYsq6HvVOMviqkZ2gi+W6fLi1c8ufdO+VbpP0CHSnaSsTWwrkAAAAASUVORK5CYII=" />
@@ -14,13 +14,26 @@
 		        background-color: #FFF5DE;
 		        text-align: center;
 		        margin: 0;
+                color: #B62;
 			}
 			h1 {
 			    font-size: 16px;
 			    font-weight: normal;
 			    margin-top: -75px;
-			    color: #B62;
 			}
+			a {
+			    text-decoration: none; color: #BE2A00;
+			}
+            a:hover {
+                text-decoration: underline;
+            }
+            #content {
+                text-align: center;
+                margin-top: 20px;
+                width: auto;
+                margin-left: auto;
+                margin-right: auto;
+            }
 			#logo {
 			    background-image: url("dailygrooves_logo.png");
 			    background-repeat:no-repeat;
@@ -28,7 +41,7 @@
 			    height: 300px;
 			}
 			#player {
-			    margin: 10px 0 40px 0;
+			    margin: 10px 0 10px 0;
 			    height: 480px;
 			}
 			#player iframe {
@@ -36,21 +49,19 @@
 			    -webkit-box-shadow: 0px 0px 10px #AAA;
 			    box-shadow: 0px 0px 10px #AAA;
 			}
-			#header {
+			#header, #contact {
 			    margin-left: auto;
 			    margin-right: auto;
 			    padding: 10px;
 			    width: 720px;
 			}
-			.content {
-			    text-align: center;
-			    margin-top: 20px;
-			    width: auto;
-			    margin-left: auto;
-			    margin-right: auto;
-			}
 			.lefttext {float: left;}
 			.righttext {float: right;}
+			#contact {font-size: 12px; margin-bottom: 20px;}
+            #leftcontact {float: left; width: 620px; text-align: left;}
+            #rightcontact {float: right width: 100px; text-align: right;}
+			/* Imageless and responsive "Fork me on GitHub" ribbon by http://codepo8.github.io/css-fork-on-github-ribbon/ , thanks!*/
+			#forkongithub a{background:#FFE7B1;color:#855;text-decoration:none;text-align:center;font-weight:bold;padding:5px 40px;font-size:1rem;line-height:2rem;position:relative;transition:0.5s;}#forkongithub a:hover{background:#FF9400;color:#fff;}#forkongithub a::before,#forkongithub a::after{content:"";width:100%;display:block;position:absolute;top:1px;left:0;height:1px;background:#fff;}#forkongithub a::after{bottom:1px;top:auto;}@media screen and (min-width:800px){#forkongithub{position:absolute;display:block;top:0;right:0;width:200px;overflow:hidden;height:200px;}#forkongithub a{width:200px;position:absolute;top:50px;right:-70px;transform:rotate(45deg);-webkit-transform:rotate(45deg);box-shadow:0px 1px 5px rgba(0,0,0,0.8);}}
         </style>
         <script src="dailygrooves.js"></script>
         <script type="text/javascript">
@@ -60,7 +71,7 @@
         </script>
 	</head>
 	<body onload="setPlaylist()">
-		<div class="content">
+		<div id="content">
 			<div id="header">
                 <div id="logo" alt="Daily Grooves"></div>
                 <h1>
@@ -71,8 +82,17 @@
 			<div id="player">
                 <iframe id="playeriframe" width="853" height="480" frameborder="0" allowfullscreen></iframe>
 			</div>
-			<div id="contact">
-			</div>
+            <div id="contact">
+                <div id="leftcontact">
+                    <p><strong>Wat?</strong></p>
+                    <p>Daily Grooves is a keep-it-simple music discovery service, featuring a single YouTube playlist refreshed &amp; shuffled daily from hand-picked sources, resulting in no-nonsense instant serendipitous ear delicacy.</p>
+                </div>
+                <div id="rightcontact">
+                    <p><strong>Who?</strong></p>
+                    <p><a href="https://twitter.com/ronjouch">@ronjouch</a><br /><a href="https://twitter.com/oyomastaz">@oyomastaz</a></p>
+                </div>
+            </div>
 		</div>
+        <div id="forkongithub"><a href="https://github.com/ronjouch/dailygrooves">Fork me on GitHub</a></div>
 	</body>
 </html>
