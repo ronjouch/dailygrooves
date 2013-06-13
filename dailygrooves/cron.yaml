@@ -1,5 +1,5 @@
 cron:
 - description: daily fetch
   url: /cronfetch
-  schedule: every day 01:00
+  schedule: every day 00:00
   timezone: US/Eastern
