@@ -72,6 +72,8 @@
 			}
 			.lefttext {float: left;}
 			.righttext {float: right;}
+			#previousplaylists {font-size: 12px;}
+			#previousplaylists a, #previousplaylists span {margin-right: 15px; cursor: pointer;}
 			#contact {font-size: 12px; margin-bottom: 20px;}
             #leftcontact {float: left; width: 620px; text-align: left;}
             #rightcontact {float: right width: 100px; text-align: right;}
@@ -80,12 +82,28 @@
         </style>
         <script src="dailygrooves.js"></script>
         <script type="text/javascript">
-            function setPlaylist() {
-                document.getElementById("playeriframe").setAttribute("src","https://www.youtube.com/embed/videoseries?list=" + dailygrooves.playlist_id);
+            function setPlaylist(playlistId) {
+            	document.getElementById("playeriframe").setAttribute("src","https://www.youtube.com/embed/videoseries?list=" + playlistId);
+            }
+            
+            function addLinksToPreviousPlaylists() {
+            	var previousPlaylists = document.getElementById("previousplaylists")
+                for (var i=0; i<dailygrooves.playlists.length ;i++) {
+                    var link = document.createElement("a");
+                    link.setAttribute('onclick', 'setPlaylist("' + dailygrooves.playlists[i][1] + '")');
+                    var node=document.createTextNode(dailygrooves.playlists[i][0] + (i==0 ? " (Today)" : ""));
+                    link.appendChild(node);
+                    previousPlaylists.appendChild(link);
+                }
+            }
+        
+            function initialSetup() {
+            	setPlaylist(dailygrooves.playlists[0][1]);
+            	addLinksToPreviousPlaylists();
             }
         </script>
 	</head>
-	<body onload="setPlaylist()">
+	<body onload="initialSetup()">
 		<div id="content">
 			<div id="header">
                 <div id="logo" alt="Daily Grooves"></div>
@@ -97,6 +115,9 @@
 			<div id="player">
                 <iframe id="playeriframe" width="853" height="480" frameborder="0" allowfullscreen></iframe>
 			</div>
+            <div id="previousplaylists">
+                <span>Playlists:</span>
+            </div>
             <div id="contact">
                 <div id="leftcontact">
                     <p><strong>Wat?</strong></p>

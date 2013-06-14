@@ -221,8 +221,11 @@ class GetPlaylistJs(RequestHandler):
 
     def get(self):
         # TODO use memcache
-        dg_retreived = Playlist.all().order('-date').get().id
-        dgjs = 'dailygrooves = {"playlist_id": "' + dg_retreived + '"};'
+        recent_playlists = Playlist.all().order('-date').fetch(limit=5)
+        dgjs = 'dailygrooves = {"playlists":['
+        for playlist in recent_playlists:
+            dgjs += '["' + unicode(playlist.date.date()) + '","' + playlist.id + '"],'
+        dgjs += ']};'
         self.response.headers['Content-Type'] = 'application/javascript'
         self.response.write(dgjs)
 
