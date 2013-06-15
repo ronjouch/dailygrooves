@@ -56,7 +56,7 @@
 			    height: 300px;
 			}
 			#player {
-			    margin: 10px 0 10px 0;
+			    margin: 10px 0 3px 0;
 			    height: 480px;
 			}
 			#player iframe {
@@ -64,6 +64,9 @@
 			    -webkit-box-shadow: 0px 0px 10px #AAA;
 			    box-shadow: 0px 0px 10px #AAA;
 			}
+			#playerhint {
+			    margin-bottom: 10px;
+            }
 			#header, #contact {
 			    margin-left: auto;
 			    margin-right: auto;
@@ -72,6 +75,7 @@
 			}
 			.lefttext {float: left;}
 			.righttext {float: right;}
+			#playerhint {height: 25px;}
 			#previousplaylists {font-size: 12px;}
 			#previousplaylists a, #previousplaylists span {margin-right: 15px; cursor: pointer;}
 			#contact {font-size: 12px; margin-bottom: 20px;}
@@ -115,6 +119,9 @@
 			<div id="player">
                 <iframe id="playeriframe" width="853" height="480" frameborder="0" allowfullscreen></iframe>
 			</div>
+            <div id="playerhint">
+                <img src="dailygrooves_youtube_player_hint.png" width="853" height="25" alt='Use the "Next" and "Playlist" buttons to skip! Note: "Next is only available with Flash'></img>
+            </div>
             <div id="previousplaylists">
                 <span>Playlists:</span>
             </div>
