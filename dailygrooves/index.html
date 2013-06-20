@@ -33,16 +33,19 @@
             #header, #contact, #news {margin-left: auto; margin-right: auto; padding: 10px; width: 720px;}
             #news {background-color: #AFA; font-size: 13px; padding: 1px; border-radius: 5px;}
 			#logo {background-image: url("dailygrooves_logo.png"); background-repeat:no-repeat; background-position:center top; height: 300px;}
+            .lefttext {float: left;}
+            .righttext {float: right;}
 			#player {margin: 10px 0 3px 0; height: 480px;}
 			#player iframe {-moz-box-shadow: 0px 0px 10px #AAA; -webkit-box-shadow: 0px 0px 10px #AAA; box-shadow: 0px 0px 10px #AAA;}
-            .leftbuttongroup {bottom:40%; position:fixed; left:0%; z-index:100;}
-            .rightbuttongroup {bottom:40%; position:fixed; right:0%; z-index:100;}
-            .leftbuttongroup div {float: left; clear: left; -webkit-border-top-right-radius: 10px; -webkit-border-bottom-right-radius: 10px; -moz-border-radius-topright: 10px; -moz-border-radius-bottomright: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px;}
-            .rightbuttongroup div {float: right; clear: right; -webkit-border-top-left-radius: 10px; -webkit-border-bottom-left-radius: 10px; -moz-border-radius-topleft: 10px; -moz-border-radius-bottomleft: 10px; border-top-left-radius: 10px; border-bottom-left-radius: 10px;}
-            .leftbuttongroup div, .rightbuttongroup div {background-color: #FFE7B1; padding: 20px; margin-top: 20px; cursor: pointer; box-shadow:0px 0px 5px rgba(0,0,0,0.5); transition:0.5s;}
-            .leftbuttongroup div:hover, .rightbuttongroup div:hover {background:#FF9400;color:#fff;}
-			.lefttext {float: left;}
-			.righttext {float: right;}
+            #leftbuttongroup {transition: left 1s; -webkit-transition: left 1s; top:40%; position:fixed; left:-50%; z-index:100;}
+            #rightbuttongroup {transition: right 1s; -webkit-transition: right 1s; top:40%; position:fixed; right:-50%; z-index:100;}
+            #leftbuttongroup div {float: left; clear: left; -webkit-border-top-right-radius: 10px; -webkit-border-bottom-right-radius: 10px; -moz-border-radius-topright: 10px; -moz-border-radius-bottomright: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px;}
+            #rightbuttongroup div {float: right; clear: right; -webkit-border-top-left-radius: 10px; -webkit-border-bottom-left-radius: 10px; -moz-border-radius-topleft: 10px; -moz-border-radius-bottomleft: 10px; border-top-left-radius: 10px; border-bottom-left-radius: 10px;}
+            #leftbuttongroup div, #rightbuttongroup div {background-color: #FFE7B1; padding: 20px; margin-top: 30px; cursor: pointer; box-shadow:0px 0px 5px rgba(0,0,0,0.5); transition:0.5s;}
+            #leftbuttongroup div:hover, #rightbuttongroup div:hover {background:#FF9400;color:#fff;}
+            .leftbuttongroup-visible {transition: left 1s; -webkit-transition: left 1s; left: 0% !important;}
+            .rightbuttongroup-visible {transition: right 1s; -webkit-transition: right 1s; right: 0% !important;}
+            .display-none {display: none !important;}
 			#playerhint {height: 25px; margin-bottom: 10px;}
 			#playlists {font-size: 12px; margin-top: 15px;}
 			#playlists a, #playlists span {margin-right: 20px; cursor: pointer;}
@@ -62,7 +65,20 @@
         <script type="text/javascript">
 	        var player;
 	        function onYouTubeIframeAPIReady() {
-	            player = new YT.Player('playeriframe', {});
+	            player = new YT.Player('playeriframe', {
+	                events: {
+	                  'onStateChange': onPlayerStateChange
+	                }
+	            });
+	        }
+	        
+	        var playedOnce = false;
+	        function onPlayerStateChange(event) {
+                var playerState = player.getPlayerState();
+	            if (YT.PlayerState.PLAYING && !playedOnce) {
+	        	    showCustomControls();
+	        	    playedOnce = true;
+	          }
 	        }
 	        
 	        function playpause() {
@@ -92,6 +108,22 @@
                     link.appendChild(node);
                     playlists.appendChild(link);
                 }
+            }
+            
+            function showCustomControls() {
+            	hidePlayPauseButtonIfIos()
+            	var left = document.getElementById("leftbuttongroup");
+            	left.className = left.className + " leftbuttongroup-visible";
+            	var right = document.getElementById("rightbuttongroup");
+            	right.className = right.className + " rightbuttongroup-visible";
+            }
+            
+            // iOS requires the video to be started by tapping on it, so we disable the play/pause button here
+            function hidePlayPauseButtonIfIos() {
+                if ((navigator.userAgent.match(/iPhone/)) || (navigator.userAgent.match(/iPod/)) || (navigator.userAgent.match(/iPad/))) {
+                    var playpause = document.getElementById("playpause");
+                    playpause.className = playpause.className + " display-none";
+                    }
             }
         
             function initialSetup() {
@@ -150,12 +182,12 @@
 			<!-- <div id="news" >
 			    <p>¡Hola Daily Groovers!</p>
 			</div> -->
-			<div class="leftbuttongroup">
+			<div id="leftbuttongroup">
                 <div onclick="previous()">Prev.<br />(left/k)</div>
             </div>
-            <div class="rightbuttongroup">
-                <div onclick="playpause()">Play/Pause<br />(space/p)</div>
+            <div id="rightbuttongroup">
                 <div onclick="next()">Next<br />(right/j)</div>
+                <div id="playpause" onclick="playpause()">Play/Pause<br />(space/p)</div>
             </div>
             <div id="player">
                 <iframe id="playeriframe" width="853" height="480" frameborder="0" allowfullscreen></iframe>
