@@ -133,7 +133,7 @@ class FetchWorker(RequestHandler):
                 except HTTPError:
                     print "couldn't read %s" % url
 
-            self.videos = videos
+            self.videos = set(videos)  # remove dups by converting list to set
 
         print "crawl_videos end"
 
