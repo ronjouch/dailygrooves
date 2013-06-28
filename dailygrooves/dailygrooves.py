@@ -11,7 +11,7 @@ from webapp2 import RequestHandler, WSGIApplication
 
 from apiclient.discovery import build
 from apiclient.errors import HttpError
-from google.appengine.api import taskqueue, users
+from google.appengine.api import memcache, taskqueue, users
 from google.appengine.ext import db
 from oauth2client.client import AccessTokenRefreshError
 from oauth2client.appengine import CredentialsModel, StorageByKeyName
@@ -220,8 +220,12 @@ class GetPlaylistJs(RequestHandler):
     '''
 
     def get(self):
-        # TODO use memcache
-        recent_playlists = Playlist.all().order('-date').fetch(limit=5)
+        today_playlists_key = 'playlists_%s' % datetime.now().date()
+        recent_playlists = memcache.get(today_playlists_key)
+        if recent_playlists is None:
+            recent_playlists = Playlist.all().order('-date').fetch(limit=5)
+            memcache.add(today_playlists_key, recent_playlists, 86400)
+
         dgjs = 'dailygrooves = {"playlists":['
         for playlist in recent_playlists:
             dgjs += '["' + unicode(playlist.date.date()) + '","' + playlist.id + '"],'
