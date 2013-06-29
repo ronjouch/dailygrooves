@@ -215,7 +215,10 @@ class FetchWorker(RequestHandler):
     def memcache_today_playlists(self):
         today_playlists_key = 'playlists_%s' % datetime.now().date()
         recent_playlists = Playlist.all().order('-date').fetch(limit=5)
-        memcache.add(today_playlists_key, recent_playlists, 86400)
+        if memcache.get(today_playlists_key) is None:
+            memcache.add(today_playlists_key, recent_playlists, 86400)
+        else:
+            memcache.set(today_playlists_key, recent_playlists, 86400)
 
 
 class GetPlaylistJs(RequestHandler):
