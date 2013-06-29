@@ -35,8 +35,7 @@ DECORATOR = OAuth2DecoratorFromClientSecrets_ApprovalPromptForce(\
 
 SOURCE_URLS = open(join(dirname(__file__), 'SOURCE_URLS')).readlines()
 TEST_VIDEOS = ['T4z4OrPmZgA', '7mpBD1Gi_0E', 'GsrZk99s9LY', 'OE4zVYm80n4']
-USE_TEST_VIDEOS = True if environ['SERVER_SOFTWARE'].startswith('Dev') \
-                       else False
+USE_TEST_VIDEOS = environ['SERVER_SOFTWARE'].startswith('Dev')
 
 
 class Playlist(db.Model):
