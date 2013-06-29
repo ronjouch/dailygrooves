@@ -104,6 +104,7 @@ class FetchWorker(RequestHandler):
         shuffle(self.videos)
         self.create_playlist()
         self.insert_videos()
+        self.memcache_today_playlists()
 
     def crawl_videos(self):
         '''Crawls videos from a list of URLs and stores the list.'''
@@ -211,6 +212,11 @@ class FetchWorker(RequestHandler):
 
                 sleep(0.1)  # seems required to avoid YT-thrown exception
 
+    def memcache_today_playlists(self):
+        today_playlists_key = 'playlists_%s' % datetime.now().date()
+        recent_playlists = Playlist.all().order('-date').fetch(limit=5)
+        memcache.add(today_playlists_key, recent_playlists, 86400)
+
 
 class GetPlaylistJs(RequestHandler):
     '''
@@ -225,7 +231,6 @@ class GetPlaylistJs(RequestHandler):
         recent_playlists = memcache.get(today_playlists_key)
         if recent_playlists is None:
             recent_playlists = Playlist.all().order('-date').fetch(limit=5)
-            memcache.add(today_playlists_key, recent_playlists, 86400)
 
         dgjs = 'dailygrooves = {"playlists":['
         for playlist in recent_playlists:
