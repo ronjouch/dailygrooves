@@ -1,6 +1,7 @@
 from datetime import datetime
 from httplib import HTTPException
 from httplib2 import Http
+from os import environ
 from os.path import join, dirname
 from random import shuffle
 from re import compile as re_compile, findall, VERBOSE
@@ -15,7 +16,6 @@ from google.appengine.api import memcache, taskqueue, users
 from google.appengine.ext import db
 from oauth2client.client import AccessTokenRefreshError
 from oauth2client.appengine import CredentialsModel, StorageByKeyName
-# from oauth2client.appengine import OAuth2DecoratorFromClientSecrets
 
 from appengine_override import \
     OAuth2DecoratorFromClientSecrets_ApprovalPromptForce
@@ -35,7 +35,8 @@ DECORATOR = OAuth2DecoratorFromClientSecrets_ApprovalPromptForce(\
 
 SOURCE_URLS = open(join(dirname(__file__), 'SOURCE_URLS')).readlines()
 TEST_VIDEOS = ['T4z4OrPmZgA', '7mpBD1Gi_0E', 'GsrZk99s9LY', 'OE4zVYm80n4']
-USE_TEST_VIDEOS = False  # True to skip sites crawling and just use test data
+USE_TEST_VIDEOS = True if environ['SERVER_SOFTWARE'].startswith('Dev') \
+                       else False
 
 
 class Playlist(db.Model):
