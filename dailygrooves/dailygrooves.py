@@ -133,7 +133,7 @@ class FetchWorker(RequestHandler):
                 except HTTPError:
                     print "couldn't read %s" % url
 
-            self.videos = set(videos)  # remove dups by converting list to set
+            self.videos = videos
 
         print "crawl_videos end"
 
@@ -179,6 +179,7 @@ class FetchWorker(RequestHandler):
 
         print "Adding videos:"
         nb_videos_inserted = 0
+        self.videos = set(self.videos)  # remove duplicates
         for video in self.videos:
 
             if (nb_videos_inserted >= YOUTUBE_MAX_VIDEOS_PER_PLAYLIST):
