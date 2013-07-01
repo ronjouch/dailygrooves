@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" >        
+<!DOCTYPE html>        
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 	<head>
         <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
@@ -18,8 +17,7 @@
         <!-- meta standard/Google -->
         <meta name="description" content="Daily Grooves is a keep-it-simple music discovery service, featuring a single YouTube playlist refreshed and shuffled daily from hand-picked sources, resulting in no-nonsense instant serendipitous ear delicacy."/>
         <meta name="keywords" content="music discovery daily serendipity randomness"/>
-        <meta name="author" content="ronan@jouchet.fr"/> 
-		<meta name="copyright" content="" />
+        <meta name="author" content="ronan@jouchet.fr"/>
 		<meta name="application-name" content="Daily Grooves" />
 		<!-- meta / Facebook -->      
         <meta property="og:type" content="website" />   
@@ -41,11 +39,12 @@
             #content {text-align: center; margin-top: 10px; width: auto; margin-left: auto; margin-right: auto;}
             #header, #contact, #news {margin-left: auto; margin-right: auto; padding: 10px; width: 720px;}
             #news {background-color: #AFA; font-size: 13px; padding: 1px; border-radius: 5px;}
+            noscript {background-color: #FAA; color: black; font-size: 20px; padding: 5px; border-radius: 5px;}
 			#logo {background-image: url("dailygrooves_logo.png"); background-repeat:no-repeat; background-position:center top; height: 300px;}
             .lefttext {float: left;}
             .righttext {float: right;}
 			#player {margin: 10px 0 3px 0; height: 480px;}
-			#player iframe {-moz-box-shadow: 0px 0px 10px #AAA; -webkit-box-shadow: 0px 0px 10px #AAA; box-shadow: 0px 0px 10px #AAA;}
+			#player iframe {border: none; -moz-box-shadow: 0px 0px 10px #AAA; -webkit-box-shadow: 0px 0px 10px #AAA; box-shadow: 0px 0px 10px #AAA;}
             #leftbuttongroup {transition: left 1s; -webkit-transition: left 1s; top:40%; position:fixed; left:-50%; z-index:100;}
             #rightbuttongroup {transition: right 1s; -webkit-transition: right 1s; top:40%; position:fixed; right:-50%; z-index:100;}
             #leftbuttongroup div {float: left; clear: left; -webkit-border-top-right-radius: 10px; -webkit-border-bottom-right-radius: 10px; -moz-border-radius-topright: 10px; -moz-border-radius-bottomright: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px;}
@@ -181,12 +180,13 @@
 	<body onload="initialSetup()" onkeyup="keypress(event)">
 		<div id="content">
 			<div id="header">
-                <div id="logo" alt="Daily Grooves"></div>
+                <div id="logo"></div>
                 <h1>
                     <span class="lefttext">Fresh tunes every day...</span>
                     <span class="righttext">... straight from the finest tubes.</span>
                 </h1>
 			</div>
+			<noscript>Daily Grooves requires JavaScript, please enable it.</noscript>
 			<!-- <div id="news" >
 			    <p>¡Hola Daily Groovers!</p>
 			</div> -->
