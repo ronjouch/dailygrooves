@@ -34,7 +34,7 @@ DECORATOR = OAuth2DecoratorFromClientSecrets_ApprovalPromptForce(\
                                             CLIENT_SECRETS, YOUTUBE_RW_SCOPE)
 
 SOURCE_URLS = open(join(dirname(__file__), 'SOURCE_URLS')).readlines()
-TEST_VIDEOS = ['T4z4OrPmZgA', '7mpBD1Gi_0E', 'GsrZk99s9LY', 'OE4zVYm80n4']
+TEST_VIDEOS = ['T4z4OrPmZgA', 'T4z4OrPmZgA', 'T4z4OrPmZgA', '7mpBD1Gi_0E', '7mpBD1Gi_0E', 'GsrZk99s9LY', 'OE4zVYm80n4']
 USE_TEST_VIDEOS = environ['SERVER_SOFTWARE'].startswith('Dev')
 
 
@@ -101,7 +101,7 @@ class FetchWorker(RequestHandler):
     def get(self):
         print "FetchWorker:get"
         self.crawl_videos()
-        shuffle(self.videos)
+        self.clean_crawled_videos()
         self.create_playlist()
         self.insert_videos()
         self.memcache_today_playlists()
@@ -137,6 +137,17 @@ class FetchWorker(RequestHandler):
             self.videos = videos
 
         print "crawl_videos end"
+
+    def clean_crawled_videos(self):
+        '''
+        Given the ensemble of crawled, videos,
+          1. remove the duplicates
+          2. shuffle the contents
+        '''
+        self.videos = set(self.videos)  # remove duplicates
+        self.videos = list(self.videos)  # back to list; sets can't be shuffled
+
+        shuffle(self.videos)
 
     def create_playlist(self):
         '''
@@ -180,7 +191,6 @@ class FetchWorker(RequestHandler):
 
         print "Adding videos:"
         nb_videos_inserted = 0
-        self.videos = set(self.videos)  # remove duplicates
         for video in self.videos:
 
             if (nb_videos_inserted >= YOUTUBE_MAX_VIDEOS_PER_PLAYLIST):
