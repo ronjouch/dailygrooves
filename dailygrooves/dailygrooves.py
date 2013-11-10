@@ -5,6 +5,7 @@ from os import environ
 from os.path import join, dirname
 from random import shuffle
 from re import compile as re_compile, findall, VERBOSE
+from socket import error as SocketError
 from time import sleep
 from urllib import urlencode
 from urllib2 import HTTPError, urlopen
@@ -130,6 +131,8 @@ class FetchWorker(RequestHandler):
                     videos += embeds
                     print "%s : found embeds %s" % (url, embeds)
                 except HTTPException:
+                    print "couldn't reach %s" % url
+                except SocketError:
                     print "couldn't reach %s" % url
                 except HTTPError:
                     print "couldn't read %s" % url
