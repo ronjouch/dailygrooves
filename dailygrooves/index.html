@@ -1,219 +1,220 @@
-<!DOCTYPE html>        
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-	<head>
-        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-        <title>Daily Grooves</title>
-        <link rel="canonical" href="http://www.dailygrooves.org/" />
-        <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAABGdBTUEAALGPC/xhBQAAASxQTFRF340q948C5IQI9ZMPtnIg0XwN9I4DXUEn+ZADNy052X8K8YwE7qNJ7Kla4JtOnl8Y+5YJ34MJ+7hmrXxH05hY6pMm9aM++aAy1p1c+KpJs3k4tncy15VK7KZY+LRldUwyvHQh46Zgs35M/bpr2p9d4qRf9bNn5aZg+bZo6alhvIlQqoRebU47AAAAAAAA+pEC/54e/96086ZD/+G9/9WZ/5EA/5sa/6Ir/bNR/96y8MWU/6Eq/5YG/5cG/6g5+Orc6Jg3/9aj/6g65Zk+/61G/65K965T/+vS//78/7hj/rFU/7Rb/5wY/dap/9em/79w/7Zd/6Ep/7FU/6Y3/rpr/6tE/7NX/69M/7Zb/7JS/7xs/7xr/5MA/5UA/6g8/7ll/7hk/7ts/5QA////53PwCAAAAC90Uk5Tr/yG/S9cxhzDAZD80d1mG/xT+hdbyOTcls8nHInp/QtKuRz8YRzypuyhYm8UAQAoophAAAAAn0lEQVQY02PQgwBtHSiDAUpraqEKqKpp6CIL6CpGRasjC0iEJCYqqyAERITiExLi5ZRgAsK83p4BQWERsjABPi9XR3f/uPBIGagAj4uTYbKHX1yopDxEwNnO2jg5Odk3WEwKIuBgbmaZnGzvFiguDRFgMLAxSbbSt/URhZrBwpxkYWSaFCugABXgZGWMiUmK5RZEuJSdiY2Dix/Ft3AAAO8iMidlHImVAAAAAElFTkSuQmCC" />
-        <!-- meta iOS -->
-        <meta name="viewport" content="">
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-        <meta name="format-detection" content="telephone=no">
-        <link rel="apple-touch-icon" sizes="72x72" href="apple-touch-icon-72x72.png">
-        <link rel="apple-touch-icon" sizes="114x114" href="apple-touch-icon-114x114.png">
-        <link rel="apple-touch-icon" href="apple-touch-icon-57x57.png">
-        <link rel="apple-touch-startup-image" href="apple-splash-screen-320x460.png">
-        <!-- meta standard/Google -->
-        <meta name="description" content="Daily Grooves is a keep-it-simple music discovery service, featuring a single YouTube playlist refreshed and shuffled daily from hand-picked sources, resulting in no-nonsense instant serendipitous ear delicacy."/>
-        <meta name="keywords" content="music discovery daily serendipity randomness"/>
-        <meta name="author" content="ronan@jouchet.fr"/>
-		<meta name="application-name" content="Daily Grooves" />
-		<!-- meta / Facebook -->      
-        <meta property="og:type" content="website" />   
-        <meta property="og:url" content="http://www.dailygrooves.org/" /> 
-		<meta property="og:title" content="Daily Grooves" />
-		<meta property="og:description" content="Daily Grooves is a keep-it-simple music discovery service, featuring a single YouTube playlist refreshed and shuffled daily from hand-picked sources, resulting in no-nonsense instant serendipitous ear delicacy." />
-        <meta property="og:image" content="http://www.dailygrooves.org/dailygrooves_logo_square.png" />
-		<!-- meta / Twitter -->          
-		<meta name="twitter:card" content="summary" />
-        <meta name="twitter:url" content="http://www.dailygrooves.org/" />
-        <meta name="twitter:title" content="Daily Grooves" />
-		<meta name="twitter:description" content="Daily Grooves is a keep-it-simple music discovery service, featuring a single YouTube playlist refreshed and shuffled daily from hand-picked sources, resulting in no-nonsense instant serendipitous ear delicacy." />
-		<meta name="twitter:image" content="http://www.dailygrooves.org/dailygrooves_logo_square.png" />
-        <style type="text/css">
-            body {font-family: 'Trebuchet MS', 'Helvetica', sans-serif; background-color: #FFF5DE; text-align: center; margin: 0; color: #B62;}
-			h1 {font-size: 16px; font-weight: normal; margin-top: -75px;}
-			a {text-decoration: none; color: #BE2A00;}
-            a:hover {text-decoration: underline;}
-            #content {text-align: center; margin-top: 10px; width: auto; margin-left: auto; margin-right: auto;}
-            #header, #contact, #news {margin-left: auto; margin-right: auto; padding: 10px; width: 720px;}
-            #news {background-color: #AFA; font-size: 13px; padding: 1px; border-radius: 5px;}
-            noscript {background-color: #FAA; color: black; font-size: 20px; padding: 5px; border-radius: 5px;}
-			#logo {background-image: url("dailygrooves_logo.png"); background-repeat:no-repeat; background-position:center top; height: 300px;}
-            .lefttext {float: left;}
-            .righttext {float: right;}
-			#player {margin: 10px 0 3px 0; height: 480px;}
-			#player iframe {border: none; -moz-box-shadow: 0px 0px 10px #AAA; -webkit-box-shadow: 0px 0px 10px #AAA; box-shadow: 0px 0px 10px #AAA;}
-            #leftbuttongroup {transition: left 1s; -webkit-transition: left 1s; top:40%; position:fixed; left:-50%; z-index:100;}
-            #rightbuttongroup {transition: right 1s; -webkit-transition: right 1s; top:40%; position:fixed; right:-50%; z-index:100;}
-            #leftbuttongroup div {float: left; clear: left; -webkit-border-top-right-radius: 10px; -webkit-border-bottom-right-radius: 10px; -moz-border-radius-topright: 10px; -moz-border-radius-bottomright: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px;}
-            #rightbuttongroup div {float: right; clear: right; -webkit-border-top-left-radius: 10px; -webkit-border-bottom-left-radius: 10px; -moz-border-radius-topleft: 10px; -moz-border-radius-bottomleft: 10px; border-top-left-radius: 10px; border-bottom-left-radius: 10px;}
-            #leftbuttongroup div, #rightbuttongroup div {background-color: #FFE7B1; padding: 20px; margin-top: 30px; cursor: pointer; box-shadow:0px 0px 5px rgba(0,0,0,0.5); transition:0.5s;}
-            #leftbuttongroup div:hover, #rightbuttongroup div:hover {background:#FF9400;color:#fff;}
-            .leftbuttongroup-visible {transition: left 1s; -webkit-transition: left 1s; left: 0% !important;}
-            .rightbuttongroup-visible {transition: right 1s; -webkit-transition: right 1s; right: 0% !important;}
-            .display-none {display: none !important;}
-			#playlists {font-size: 12px; margin-top: 15px;}
-			#playlists a, #playlists span {margin-right: 20px; cursor: pointer;}
-			#contact {font-size: 12px; margin-bottom: 20px;}
-            #leftcontact {float: left; width: 620px; text-align: left;}
-            #rightcontact {float: right; width: 100px; text-align: right;}
-			/* Imageless and responsive "Fork me on GitHub" ribbon by http://codepo8.github.io/css-fork-on-github-ribbon/ , thanks!*/
-			#forkongithub a{background:#FFE7B1;color:#855;text-decoration:none;text-align:center;font-weight:bold;padding:5px 40px;font-size:1rem;line-height:2rem;position:relative;transition:0.5s;}#forkongithub a:hover{background:#FF9400;color:#fff;}#forkongithub a::before,#forkongithub a::after{content:"";width:100%;display:block;position:absolute;top:1px;left:0;height:1px;background:#fff;}#forkongithub a::after{bottom:1px;top:auto;}@media screen and (min-width:800px){#forkongithub{position:absolute;display:block;top:0;right:0;width:200px;overflow:hidden;height:200px;}#forkongithub a{width:200px;position:absolute;top:50px;right:-70px;transform:rotate(45deg);-webkit-transform:rotate(45deg);box-shadow:0px 1px 5px rgba(0,0,0,0.5);}}
-            #forkongithub {z-index: 50;}
-        </style>
-        <!--[if lte IE 8]>
-        <style>
-            .leftbuttongroup div, .rightbuttongroup div {display: none;}
-        </style>
-        <![endif]-->
-        <script src="dailygrooves.js"></script>
-        <script type="text/javascript">
-	        var player;
-	        function onYouTubeIframeAPIReady() {
-	            player = new YT.Player('playeriframe', {
-	                events: {
-	                  'onStateChange': onPlayerStateChange
-	                }
-	            });
-	        }
-	        
-	        var playedOnce = false;
-	        function onPlayerStateChange(event) {
-                var playerState = player.getPlayerState();
-	            if (YT.PlayerState.PLAYING && !playedOnce) {
-	        	    showCustomControls();
-	        	    playedOnce = true;
-	          }
-	        }
-	        
-	        function playpause() {
-	        	var playerState = player.getPlayerState();
-	        	if (playerState === YT.PlayerState.PLAYING || playerState === YT.PlayerState.BUFFERING) {
-	        		player.pauseVideo();
-	        	}
-	        	else if (playerState === YT.PlayerState.ENDED || playerState === YT.PlayerState.PAUSED || playerState === YT.PlayerState.UNSTARTED || playerState === YT.PlayerState.CUED) {
-	        		player.playVideo();
-	        	}
-	        }
-	        
-            function previous() {player.previousVideo();}
-            
-	        function next() {player.nextVideo();}
-	        
-            function setPlaylist(playlistId) {
-            	document.getElementById("playeriframe").setAttribute("src","http://www.youtube.com/embed/videoseries?wmode=opaque&autohide=0&disablekb=1&enablejsapi=1&list=" + playlistId);
-            }
-            
-            function addLinksToPreviousPlaylists() {
-            	var playlists = document.getElementById("playlists")
-                for (var i=0; i<dailygrooves.playlists.length ;i++) {
-                    var link = document.createElement("a");
-                    link.setAttribute('onclick', 'setPlaylist("' + dailygrooves.playlists[i][1] + '")');
-                    var node=document.createTextNode(dailygrooves.playlists[i][0] + (i==0 ? " (today)" : ""));
-                    link.appendChild(node);
-                    playlists.appendChild(link);
-                }
-            }
-            
-            function showCustomControls() {
-            	hidePlayPauseButtonIfIos()
-            	var left = document.getElementById("leftbuttongroup");
-            	left.className = left.className + " leftbuttongroup-visible";
-            	var right = document.getElementById("rightbuttongroup");
-            	right.className = right.className + " rightbuttongroup-visible";
-            }
-            
-            // iOS requires the video to be started by tapping on it, so we disable the play/pause button here
-            function hidePlayPauseButtonIfIos() {
-                if ((navigator.userAgent.match(/iPhone/)) || (navigator.userAgent.match(/iPod/)) || (navigator.userAgent.match(/iPad/))) {
-                    var playpause = document.getElementById("playpause");
-                    playpause.className = playpause.className + " display-none";
-                    }
-            }
-        
-            function initialSetup() {
-            	setPlaylist(dailygrooves.playlists[0][1]);
-            	addLinksToPreviousPlaylists();
-            	
-                // load the IFrame Player API code asynchronously, as per https://developers.google.com/youtube/iframe_api_reference
-                var tag = document.createElement('script');
-                tag.src = "https://www.youtube.com/iframe_api";
-                var firstScriptTag = document.getElementsByTagName('script')[0];
-                firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-            }
-            
-            function keypress(event){
-                var KEY_J = 74;
-                var KEY_K = 75;
-                var KEY_P = 80;
-            	var KEY_SPACE = 32;
-            	var KEY_LEFT = 37;
-            	var KEY_RIGHT = 39;
-            	
-            	switch(event.keyCode) {
-            	   case KEY_SPACE:
-            		   playpause();
-            		   break;
-                   case KEY_P:
-                       playpause();
-                       break;
-            	   case KEY_LEFT:
-            		   previous();
-            		   break;
-                   case KEY_K:
-                       previous();
-                       break;
-            	   case KEY_RIGHT:
-            		   next();
-            		   break;
-                   case KEY_J:
-                       next();
-                       break;
-            	   default:
-            		   break;
-            	}
-            }
-        </script>
-	</head>
-	<body onload="initialSetup()" onkeyup="keypress(event)">
-		<div id="content">
-			<div id="header">
-                <div id="logo"></div>
-                <h1>
-                    <span class="lefttext">Fresh tunes every day...</span>
-                    <span class="righttext">... straight from the finest tubes.</span>
-                </h1>
-			</div>
-			<noscript>Daily Grooves requires JavaScript, please enable it.</noscript>
-			<!-- <div id="news" >
-			    <p>¡Hola Daily Groovers!</p>
-			</div> -->
-			<div id="leftbuttongroup">
-                <div onclick="previous()">Prev.<br />(left/k)</div>
-            </div>
-            <div id="rightbuttongroup">
-                <div onclick="next()">Next<br />(right/j)</div>
-                <div id="playpause" onclick="playpause()">Play/Pause<br />(space/p)</div>
-            </div>
-            <div id="player">
-                <iframe id="playeriframe" width="853" height="480" frameborder="0" allowfullscreen></iframe>
-            </div>
-            <div id="playlists">
-                <span>Playlists:</span>
-            </div>
-            <div id="contact">
-                <div id="leftcontact">
-                    <p><strong>Wat?</strong></p>
-                    <p>Daily Grooves is a keep-it-simple music discovery service, featuring a single YouTube playlist refreshed &amp; shuffled daily from hand-picked sources, resulting in no-nonsense instant serendipitous ear delicacy.</p>
-                </div>
-                <div id="rightcontact">
-                    <p><strong>Feedback?</strong></p>
-                    <p><a href="https://twitter.com/ronjouch">@ronjouch</a><br /><a href="https://twitter.com/oyomastaz">@oyomastaz</a></p>
-                </div>
-            </div>
-		</div>
-        <div id="forkongithub"><a href="https://github.com/ronjouch/dailygrooves">Fork me on GitHub</a></div>
-	</body>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <title>Daily Grooves</title>
+    <link rel="canonical" href="http://www.dailygrooves.org/" />
+    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAABGdBTUEAALGPC/xhBQAAASxQTFRF340q948C5IQI9ZMPtnIg0XwN9I4DXUEn+ZADNy052X8K8YwE7qNJ7Kla4JtOnl8Y+5YJ34MJ+7hmrXxH05hY6pMm9aM++aAy1p1c+KpJs3k4tncy15VK7KZY+LRldUwyvHQh46Zgs35M/bpr2p9d4qRf9bNn5aZg+bZo6alhvIlQqoRebU47AAAAAAAA+pEC/54e/96086ZD/+G9/9WZ/5EA/5sa/6Ir/bNR/96y8MWU/6Eq/5YG/5cG/6g5+Orc6Jg3/9aj/6g65Zk+/61G/65K965T/+vS//78/7hj/rFU/7Rb/5wY/dap/9em/79w/7Zd/6Ep/7FU/6Y3/rpr/6tE/7NX/69M/7Zb/7JS/7xs/7xr/5MA/5UA/6g8/7ll/7hk/7ts/5QA////53PwCAAAAC90Uk5Tr/yG/S9cxhzDAZD80d1mG/xT+hdbyOTcls8nHInp/QtKuRz8YRzypuyhYm8UAQAoophAAAAAn0lEQVQY02PQgwBtHSiDAUpraqEKqKpp6CIL6CpGRasjC0iEJCYqqyAERITiExLi5ZRgAsK83p4BQWERsjABPi9XR3f/uPBIGagAj4uTYbKHX1yopDxEwNnO2jg5Odk3WEwKIuBgbmaZnGzvFiguDRFgMLAxSbbSt/URhZrBwpxkYWSaFCugABXgZGWMiUmK5RZEuJSdiY2Dix/Ft3AAAO8iMidlHImVAAAAAElFTkSuQmCC" />
+    <!-- meta iOS -->
+    <meta name="viewport" content="">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="apple-touch-icon" sizes="72x72" href="apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon-57x57.png">
+    <link rel="apple-touch-startup-image" href="apple-splash-screen-320x460.png">
+    <!-- meta standard/Google -->
+    <meta name="description" content="Daily Grooves is a keep-it-simple music discovery service, featuring a single YouTube playlist refreshed and shuffled daily from hand-picked sources, resulting in no-nonsense instant serendipitous ear delicacy."/>
+    <meta name="keywords" content="music discovery daily serendipity randomness"/>
+    <meta name="author" content="ronan@jouchet.fr"/>
+    <meta name="application-name" content="Daily Grooves" />
+    <!-- meta / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="http://www.dailygrooves.org/" />
+    <meta property="og:title" content="Daily Grooves" />
+    <meta property="og:description" content="Daily Grooves is a keep-it-simple music discovery service, featuring a single YouTube playlist refreshed and shuffled daily from hand-picked sources, resulting in no-nonsense instant serendipitous ear delicacy." />
+    <meta property="og:image" content="http://www.dailygrooves.org/dailygrooves_logo_square.png" />
+    <!-- meta / Twitter -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:url" content="http://www.dailygrooves.org/" />
+    <meta name="twitter:title" content="Daily Grooves" />
+    <meta name="twitter:description" content="Daily Grooves is a keep-it-simple music discovery service, featuring a single YouTube playlist refreshed and shuffled daily from hand-picked sources, resulting in no-nonsense instant serendipitous ear delicacy." />
+    <meta name="twitter:image" content="http://www.dailygrooves.org/dailygrooves_logo_square.png" />
+    <style type="text/css">
+      body {font-family: 'Trebuchet MS', 'Helvetica', sans-serif; background-color: #FFF5DE; text-align: center; margin: 0; color: #B62;}
+      h1 {font-size: 16px; font-weight: normal; margin-top: -75px;}
+      a {text-decoration: none; color: #BE2A00;}
+      a:hover {text-decoration: underline;}
+      #content {text-align: center; margin-top: 10px; width: auto; margin-left: auto; margin-right: auto;}
+      #header, #contact, #news {margin-left: auto; margin-right: auto; padding: 10px; width: 720px;}
+      #news {background-color: #AFA; font-size: 13px; padding: 1px; border-radius: 5px;}
+      noscript {background-color: #FAA; color: black; font-size: 20px; padding: 5px; border-radius: 5px;}
+      #logo {background-image: url("dailygrooves_logo.png"); background-repeat:no-repeat; background-position:center top; height: 300px;}
+      .lefttext {float: left;}
+      .righttext {float: right;}
+      #videoTitle {text-align: center; width: 853px; background: #222; margin: auto; color: white; padding: 6px 0; border-radius: 4px 4px 0 0;}
+      #player {margin: 10px 0 3px 0; height: 480px;}
+      #player iframe {border: none; -moz-box-shadow: 0px 0px 10px #AAA; -webkit-box-shadow: 0px 0px 10px #AAA; box-shadow: 0px 0px 10px #AAA;}
+      #leftbuttongroup {transition: left 1s; -webkit-transition: left 1s; top:40%; position:fixed; left:-50%; z-index:100;}
+      #rightbuttongroup {transition: right 1s; -webkit-transition: right 1s; top:40%; position:fixed; right:-50%; z-index:100;}
+      #leftbuttongroup div {float: left; clear: left; -webkit-border-top-right-radius: 5px; -webkit-border-bottom-right-radius: 5px; -moz-border-radius-topright: 5px; -moz-border-radius-bottomright: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;}
+      #rightbuttongroup div {float: right; clear: right; -webkit-border-top-left-radius: 5px; -webkit-border-bottom-left-radius: 5px; -moz-border-radius-topleft: 5px; -moz-border-radius-bottomleft: 5px; border-top-left-radius: 5px; border-bottom-left-radius: 5px;}
+      #leftbuttongroup div, #rightbuttongroup div {background-color: #FFE7B1; padding: 20px; margin-top: 30px; cursor: pointer; box-shadow:0px 0px 5px rgba(0,0,0,0.5); transition:0.5s;}
+      #leftbuttongroup div:hover, #rightbuttongroup div:hover {background:#FF9400;color:#fff;}
+      .leftbuttongroup-visible {transition: left 1s; -webkit-transition: left 1s; left: 0% !important;}
+      .rightbuttongroup-visible {transition: right 1s; -webkit-transition: right 1s; right: 0% !important;}
+      .display-none {display: none !important;}
+      #playlists {font-size: 12px; margin-top: 15px;}
+      #playlists a, #playlists span {margin-right: 20px; cursor: pointer;}
+      #contact {font-size: 12px; margin-bottom: 20px;}
+      #leftcontact {float: left; width: 620px; text-align: left;}
+      #rightcontact {float: right; width: 100px; text-align: right;}
+      /* Imageless and responsive "Fork me on GitHub" ribbon by http://codepo8.github.io/css-fork-on-github-ribbon/ , thanks!*/
+      #forkongithub a{background:#FFE7B1;color:#855;text-decoration:none;text-align:center;font-weight:bold;padding:5px 40px;font-size:1rem;line-height:2rem;position:relative;transition:0.5s;}#forkongithub a:hover{background:#FF9400;color:#fff;}#forkongithub a::before,#forkongithub a::after{content:"";width:100%;display:block;position:absolute;top:1px;left:0;height:1px;background:#fff;}#forkongithub a::after{bottom:1px;top:auto;}@media screen and (min-width:800px){#forkongithub{position:absolute;display:block;top:0;right:0;width:200px;overflow:hidden;height:200px;}#forkongithub a{width:200px;position:absolute;top:50px;right:-70px;transform:rotate(45deg);-webkit-transform:rotate(45deg);box-shadow:0px 1px 5px rgba(0,0,0,0.5);}}
+      #forkongithub {z-index: 50;}
+    </style>
+    <!--[if lte IE 8]>
+      <style>
+          .leftbuttongroup div, .rightbuttongroup div {display: none;}
+      </style>
+    <![endif]-->
+    <script src="dailygrooves.js"></script>
+    <script type="text/javascript">
+      var player, playedOnce = false;
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player('playeriframe', {
+          events: {'onStateChange': onPlayerStateChange}
+        });
+      }
+      function videoShouldBeSkipped(title, duration) {
+        if (duration && duration < 60) {
+          return true;
+        }
+        var NONMUSIC_KEYWORDS = ["interview", "trailer", "review", "documentary", "documentaire"];
+        for (var i=0; i<NONMUSIC_KEYWORDS.length; i++) {
+          if (title.toLowerCase().indexOf(NONMUSIC_KEYWORDS[i]) > -1) {
+            return true;
+          }
+        }
+        return false;
+      }
+      function onPlayerStateChange(event) {
+        var playerState = player.getPlayerState();
+        if (YT.PlayerState.PLAYING) {
+          if (!playedOnce) {
+            showCustomControls();
+            playedOnce = true;
+          }
+          // getVideoData and getDuration are undocumented APIs :/
+          // Might break, but it'd be sad to make a gdata call to get each video title.
+          if ('getVideoData' in player) {
+            var videoTitle = player.getVideoData().title;
+            document.getElementById("videoTitle").innerHTML = videoTitle;
+            if (videoShouldBeSkipped(videoTitle, player.getDuration())) {
+              next();
+            };
+          }
+        }
+      }
+      function playpause() {
+        var playerState = player.getPlayerState();
+        if (playerState === YT.PlayerState.PLAYING || playerState === YT.PlayerState.BUFFERING) {
+          player.pauseVideo();
+        }
+        else if (playerState === YT.PlayerState.ENDED || playerState === YT.PlayerState.PAUSED || playerState === YT.PlayerState.UNSTARTED || playerState === YT.PlayerState.CUED) {
+          player.playVideo();
+        }
+      }
+      function previous() {player.previousVideo();}
+      function next() {player.nextVideo();}
+      function setPlaylist(playlistId) {
+        document.getElementById("playeriframe")
+                .setAttribute("src","http://www.youtube.com/embed/videoseries?wmode=opaque&autohide=0&disablekb=1&enablejsapi=1&list=" + playlistId);
+      }
+      function addLinksToPreviousPlaylists() {
+        var playlists = document.getElementById("playlists")
+          for (var i=0; i<dailygrooves.playlists.length ;i++) {
+            var link = document.createElement("a");
+            link.setAttribute('onclick', 'setPlaylist("' + dailygrooves.playlists[i][1] + '")');
+            var node=document.createTextNode(dailygrooves.playlists[i][0] + (i==0 ? " (today)" : ""));
+            link.appendChild(node);
+            playlists.appendChild(link);
+          }
+      }
+      function showCustomControls() {
+        hidePlayPauseButtonIfIos();
+        var left = document.getElementById("leftbuttongroup");
+        left.className = left.className + " leftbuttongroup-visible";
+        var right = document.getElementById("rightbuttongroup");
+        right.className = right.className + " rightbuttongroup-visible";
+      }
+      // iOS requires the video to be started by tapping on it, so we disable the play/pause button here
+      function hidePlayPauseButtonIfIos() {
+        if ((navigator.userAgent.match(/iPhone/)) || (navigator.userAgent.match(/iPod/)) || (navigator.userAgent.match(/iPad/))) {
+          var playpause = document.getElementById("playpause");
+          playpause.className = playpause.className + " display-none";
+        }
+      }
+      function initialSetup() {
+        setPlaylist(dailygrooves.playlists[0][1]);
+        addLinksToPreviousPlaylists();
+        // Load the IFrame Player API code asynchronously.
+        // See https://developers.google.com/youtube/iframe_api_reference
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+      }
+      function keypress(event) {
+        var KEY_J = 74, KEY_K = 75, KEY_P = 80, KEY_SPACE = 32, KEY_LEFT = 37, KEY_RIGHT = 39;
+        switch(event.keyCode) {
+         case KEY_SPACE:
+           playpause(); break;
+         case KEY_P:
+           playpause(); break;
+         case KEY_LEFT:
+           previous(); break;
+         case KEY_K:
+           previous(); break;
+         case KEY_RIGHT:
+           next(); break;
+         case KEY_J:
+           next(); break;
+         default:
+           break;
+        }
+      }
+    </script>
+  </head>
+  <body onload="initialSetup()" onkeyup="keypress(event)">
+    <div id="content">
+      <div id="header">
+        <div id="logo"></div>
+        <h1>
+          <span class="lefttext">Fresh tunes every day...</span>
+          <span class="righttext">... straight from the finest tubes.</span>
+        </h1>
+      </div>
+      <noscript>Daily Grooves requires JavaScript, please enable it.</noscript>
+      <div id="news" >
+        <p>¡Hola Daily Groovers! Your favorite music discovery hotness was updated to: 1. always <a href="https://github.com/ronjouch/dailygrooves/issues/9">show the song title on top of the video</a> (mouseover no longer needed!), 2. <a href="https://github.com/ronjouch/dailygrooves/issues/3">skip non-music videos easy enough to detect</a>: &lt; 60 seconds, or containing keywords like "trailer" or "interview". Cheers! Feedback always welcome on <a href="https://github.com/ronjouch/dailygrooves/issues">GitHub Issues</a>. --<a href="https://twitter.com/ronjouch">@ronjouch</a></p>
+      </div>
+      <div id="leftbuttongroup">
+        <div onclick="previous()">Prev.<br />(left/k)</div>
+      </div>
+      <div id="rightbuttongroup">
+        <div onclick="next()">Next<br />(right/j)</div>
+        <div id="playpause" onclick="playpause()">Play/Pause<br />(space/p)</div>
+      </div>
+      <div id="player">
+        <div id="videoTitle"></div>
+        <iframe id="playeriframe" width="853" height="480" frameborder="0" allowfullscreen></iframe>
+      </div>
+      <div id="playlists">
+        <span>Playlists:</span>
+      </div>
+      <div id="contact">
+        <div id="leftcontact">
+          <p><strong>Wat?</strong></p>
+          <p>Daily Grooves is a keep-it-simple music discovery service, featuring a single YouTube playlist refreshed &amp; shuffled daily from hand-picked sources, resulting in no-nonsense instant serendipitous ear delicacy.</p>
+        </div>
+        <div id="rightcontact">
+          <p><strong>Feedback?</strong></p>
+          <p><a href="https://twitter.com/ronjouch">@ronjouch</a><br /><a href="https://twitter.com/oyomastaz">@oyomastaz</a></p>
+        </div>
+      </div>
+    </div>
+    <div id="forkongithub"><a href="https://github.com/ronjouch/dailygrooves">Fork me on GitHub</a></div>
+  </body>
 </html>
