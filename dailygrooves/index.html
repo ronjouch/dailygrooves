@@ -71,7 +71,7 @@
     <![endif]-->
     <script src="dailygrooves.js"></script>
     <script type="text/javascript">
-      var player, playedOnce = false;
+      var player, playedOnce = false, goingBack = false;
       function onYouTubeIframeAPIReady() {
         player = new YT.Player('playeriframe', {
           events: {'onStateChange': onPlayerStateChange}
@@ -91,7 +91,7 @@
       }
       function onPlayerStateChange(event) {
         var playerState = player.getPlayerState();
-        if (YT.PlayerState.PLAYING) {
+        if (playerState === YT.PlayerState.PLAYING) {
           if (!playedOnce) {
             showCustomControls();
             playedOnce = true;
@@ -99,10 +99,14 @@
           // getVideoData and getDuration are undocumented APIs :/
           // Might break, but it'd be sad to make a gdata call to get each video title.
           if ('getVideoData' in player) {
-            var videoTitle = player.getVideoData().title;
+            var videoTitle = player.getVideoData().title,
+                shouldSkip = videoShouldBeSkipped(videoTitle, player.getDuration());
             document.getElementById("videoTitle").innerHTML = videoTitle;
-            if (videoShouldBeSkipped(videoTitle, player.getDuration())) {
-              next();
+            if (shouldSkip) {
+              (goingBack) ? previous() : next();
+            }
+            else {
+              goingBack = false;
             };
           }
         }
@@ -164,9 +168,9 @@
          case KEY_P:
            playpause(); break;
          case KEY_LEFT:
-           previous(); break;
+           goingBack = true; previous(); break;
          case KEY_K:
-           previous(); break;
+           goingBack = true; previous(); break;
          case KEY_RIGHT:
            next(); break;
          case KEY_J:
