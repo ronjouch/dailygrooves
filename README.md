@@ -4,9 +4,9 @@
 
 [![DailyGrooves screenshot](https://github.com/ronjouch/dailygrooves/raw/master/dailygrooves_screenshot.png)](http://www.dailygrooves.org/)
 
-Technically, it is a tiny Python2.7 Google App Engine app serving a single static page displaying a new playlist everyday. Each day a new playlist is created by a cron job that fires a Task that crawls a list of sources for embedded/linked videos, shuffles them, and inserts them into a YouTube playlist via the Python API.
+Technically, it is a tiny Python2.7 Google App Engine app serving a single static page displaying a YouTube playlist iframe. Each day, a new playlist is created by a GAE cron job firing a Task that crawls a list of sources for embedded/linked videos, shuffles them, and inserts them into a YouTube playlist via the Python API.
 
-## Usage & Installation
+## Usage / Installation
 
 If you do not want to use [my DailyGrooves instance](http://www.dailygrooves.org/), you can roll your own:
 
@@ -23,15 +23,10 @@ If you do not want to use [my DailyGrooves instance](http://www.dailygrooves.org
 
 As of February 2015, DailyGrooves runs fine on Python 2.7 / GAE 1.9.17 / GAE-Python-Client 1.1.
 
-## Getting Involved
+## Getting involved
 
-[Bug Reports](https://github.com/ronjouch/dailygrooves/issues) and [Pull Requests](https://github.com/ronjouch/dailygrooves/pulls) are welcome via GitHub. Here are a few things I'm thinking of:
+[Bug Reports](https://github.com/ronjouch/dailygrooves/issues) and [Pull Requests](https://github.com/ronjouch/dailygrooves/pulls) are welcome via GitHub.
 
-* Unit tests, currently sadly missing :-/ .
-* Add a box below the video that shows what's playing, and offers quick Amazon/iTunes/SongMeanings/PirateBay/Wikipedia links.
-* Support multimedia keys (see [Paul Rouget's post on media events](http://paulrouget.com/e/mediaevents/) and [crbug#131612](http://code.google.com/p/chromium/issues/detail?id=131612)).
-* (Major rewrite) login system enabling user-defined source URLs.
+## License / contact
 
-## License and contact
-
-Licensed under the BSD-new license, 2013, [ronan@jouchet.fr](mailto:ronan@jouchet.fr) / [@ronjouch](https://twitter.com/ronjouch).
+Licensed under the MIT license, 2013-2015, [ronan@jouchet.fr](mailto:ronan@jouchet.fr) / [@ronjouch](https://twitter.com/ronjouch).

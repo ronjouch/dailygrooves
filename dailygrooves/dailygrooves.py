@@ -15,6 +15,7 @@ from apiclient.discovery import build
 from apiclient.errors import HttpError
 from google.appengine.api import memcache, taskqueue, users
 from google.appengine.ext import db
+from google.appengine.runtime import DeadlineExceededError
 from oauth2client.client import AccessTokenRefreshError
 from oauth2client.appengine import CredentialsModel, StorageByKeyName
 
@@ -118,7 +119,7 @@ class FetchWorker(RequestHandler):
             |                             # or
             youtu\.be)/                   # youtu.be
             (?:embed/|watch\?v=)          # /embed/... or /watch?v=...
-            ([^\s\"\?&]+)                 # capture & stop at whitespace " ? &
+            ([^\s\"\?&#]+)                # capture & stop at whitespace " ? & #
             ''', VERBOSE)
 
             for url in SOURCE_URLS:
@@ -216,9 +217,9 @@ class FetchWorker(RequestHandler):
                     request.execute(http=http)
                     print "  %s: %s ..." % (nb_videos_inserted, video)
                     nb_videos_inserted += 1
-                except HttpError:
-                    print "  %s: KO, insertion of %s failed" % \
-                        (nb_videos_inserted, video)
+                # https://cloud.google.com/appengine/articles/deadlineexceedederrors
+                except HttpError, DeadlineExceededError:
+                    print "  %s: KO, insertion of %s failed" % (nb_videos_inserted, video)
                 except AccessTokenRefreshError:
                     print "  %s: KO, access token refresh error on %s" % \
                         (nb_videos_inserted, video)
