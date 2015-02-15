@@ -14,8 +14,8 @@ from webapp2 import RequestHandler, WSGIApplication
 from apiclient.discovery import build
 from apiclient.errors import HttpError
 from google.appengine.api import memcache, taskqueue, users
+from google.appengine.api.urlfetch_errors import DeadlineExceededError
 from google.appengine.ext import db
-from google.appengine.runtime import DeadlineExceededError
 from oauth2client.client import AccessTokenRefreshError
 from oauth2client.appengine import CredentialsModel, StorageByKeyName
 
@@ -32,11 +32,11 @@ YOUTUBE = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION)
 # honor additional **kwargs like approval_prompt='force', and it *has* to be
 # set at init time, so I built this slightly modified version, which just
 # adds one parameter. Better ways to do that very welcome.
-DECORATOR = OAuth2DecoratorFromClientSecrets_ApprovalPromptForce(\
-                                            CLIENT_SECRETS, YOUTUBE_RW_SCOPE)
+DECORATOR = OAuth2DecoratorFromClientSecrets_ApprovalPromptForce(CLIENT_SECRETS, YOUTUBE_RW_SCOPE)
 
 SOURCE_URLS = open(join(dirname(__file__), 'SOURCE_URLS')).readlines()
-TEST_VIDEOS = ['T4z4OrPmZgA', 'T4z4OrPmZgA', 'T4z4OrPmZgA', '7mpBD1Gi_0E', '7mpBD1Gi_0E', 'GsrZk99s9LY', 'OE4zVYm80n4']
+TEST_VIDEOS = ['T4z4OrPmZgA', 'T4z4OrPmZgA', 'T4z4OrPmZgA', '7mpBD1Gi_0E',
+               '7mpBD1Gi_0E', 'GsrZk99s9LY', 'OE4zVYm80n4']
 USE_TEST_VIDEOS = environ['SERVER_SOFTWARE'].startswith('Dev')
 
 
@@ -167,16 +167,11 @@ class FetchWorker(RequestHandler):
         print "create_playlist authorized creds"
         request = YOUTUBE.playlists().insert(
             part="snippet,status",
-                body=dict(
-                    snippet=dict(
-                        title="DailyGrooves %s" % datetime.now().date(),
-                        description="DailyGrooves %s" % datetime.now().date()
-                    ),
-                    status=dict(
-                        privacyStatus="public"
-                    )
-                )
-            )
+            body={'snippet': {'title': "DailyGrooves %s" % datetime.now().date(),
+                              'description': "DailyGrooves %s" % datetime.now().date()},
+                  'status': {'privacyStatus': 'public'}
+                  }
+        )
         response = request.execute(http=http)
         print "create_playlist executed req"
         self.playlist_id = response["id"]
@@ -200,15 +195,11 @@ class FetchWorker(RequestHandler):
             if (nb_videos_inserted >= YOUTUBE_MAX_VIDEOS_PER_PLAYLIST):
                 break
             else:
-                body_add_video = dict(
-                  snippet=dict(
-                    playlistId=self.playlist_id,
-                    resourceId=dict(
-                      kind="youtube#video",
-                      videoId=video
-                    )
-                  )
-                )
+                body_add_video = {'snippet': {
+                    'playlistId': self.playlist_id,
+                    'resourceId': {'kind': "youtube#video", 'videoId': video}
+                    }
+                }
                 try:
                     request = YOUTUBE.playlistItems().insert(
                         part=",".join(body_add_video.keys()),
@@ -218,7 +209,7 @@ class FetchWorker(RequestHandler):
                     print "  %s: %s ..." % (nb_videos_inserted, video)
                     nb_videos_inserted += 1
                 # https://cloud.google.com/appengine/articles/deadlineexceedederrors
-                except HttpError, DeadlineExceededError:
+                except (HttpError, DeadlineExceededError):
                     print "  %s: KO, insertion of %s failed" % (nb_videos_inserted, video)
                 except AccessTokenRefreshError:
                     print "  %s: KO, access token refresh error on %s" % \
@@ -257,11 +248,9 @@ class GetPlaylistJs(RequestHandler):
         self.response.write(dgjs)
 
 
-APP_ROUTES = [
-          ('/dailygrooves.js', GetPlaylistJs),
-          ('/cronfetch', CronFetchHandler),
-          ('/fetch', FetchHandler),
-          ('/fetchworker', FetchWorker),
-          (DECORATOR.callback_path, DECORATOR.callback_handler()),
-          ]
+APP_ROUTES = [('/dailygrooves.js', GetPlaylistJs),
+              ('/cronfetch', CronFetchHandler),
+              ('/fetch', FetchHandler),
+              ('/fetchworker', FetchWorker),
+              (DECORATOR.callback_path, DECORATOR.callback_handler())]
 app = WSGIApplication(APP_ROUTES, debug=True)
