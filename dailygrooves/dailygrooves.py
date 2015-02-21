@@ -215,7 +215,7 @@ class FetchWorker(RequestHandler):
                     print "  %s: KO, access token refresh error on %s" % \
                         (nb_videos_inserted, video)
 
-                sleep(0.1)  # seems required to avoid YT-thrown exception
+                sleep(0.2)  # seems required to avoid YT-thrown exception
 
     def memcache_today_playlists(self):
         today_playlists_key = 'playlists_%s' % datetime.now().date()
