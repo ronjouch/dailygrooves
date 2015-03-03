@@ -81,7 +81,7 @@
         if (duration && duration < 60) {
           return true;
         }
-        var NONMUSIC_KEYWORDS = ["interview", "trailer", "review", "documentary", "documentaire", "adult swim", "q&a"];
+        var NONMUSIC_KEYWORDS = ["interview", "trailer", "review", "documentary", "documentaire", "adult swim", "q&a", "coldplay", "blink 182", "taylor swift"];
         for (var i=0; i<NONMUSIC_KEYWORDS.length; i++) {
           if (title.toLowerCase().indexOf(NONMUSIC_KEYWORDS[i]) > -1) {
             return true;

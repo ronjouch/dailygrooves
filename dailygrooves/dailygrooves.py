@@ -14,13 +14,17 @@ from webapp2 import RequestHandler, WSGIApplication
 from apiclient.discovery import build
 from apiclient.errors import HttpError
 from google.appengine.api import memcache, taskqueue, users
-from google.appengine.api.urlfetch_errors import DeadlineExceededError
 from google.appengine.ext import db
 from oauth2client.client import AccessTokenRefreshError
 from oauth2client.appengine import CredentialsModel, StorageByKeyName
 
 from appengine_override import \
     OAuth2DecoratorFromClientSecrets_ApprovalPromptForce
+
+# We hit once DEE3 once in a while, and maybe another one.
+from google.appengine.runtime import DeadlineExceededError as DEE1
+from google.appengine.api.urlfetch_errors import DeadlineExceededError as DEE2
+from google.appengine.runtime.apiproxy_errors import DeadlineExceededError as DEE3
 
 CLIENT_SECRETS = join(dirname(__file__), 'client_secrets.json')
 YOUTUBE_RW_SCOPE = "https://www.googleapis.com/auth/youtube"
@@ -209,13 +213,19 @@ class FetchWorker(RequestHandler):
                     print "  %s: %s ..." % (nb_videos_inserted, video)
                     nb_videos_inserted += 1
                 # https://cloud.google.com/appengine/articles/deadlineexceedederrors
-                except (HttpError, DeadlineExceededError):
-                    print "  %s: KO, insertion of %s failed" % (nb_videos_inserted, video)
+                except HttpError:
+                    print "  %s: KO, inserting %s failed" % (nb_videos_inserted, video)
+                except DEE1:
+                    print "  %s: KO, inserting %s failed with DEE1" % (nb_videos_inserted, video)
+                except DEE2:
+                    print "  %s: KO, inserting %s failed with DEE2" % (nb_videos_inserted, video)
+                except DEE3:
+                    print "  %s: KO, inserting %s failed with DEE3" % (nb_videos_inserted, video)
                 except AccessTokenRefreshError:
                     print "  %s: KO, access token refresh error on %s" % \
                         (nb_videos_inserted, video)
 
-                sleep(0.2)  # seems required to avoid YT-thrown exception
+                sleep(1)  # Seems required to avoid YT-thrown exception, and might help with DEEs
 
     def memcache_today_playlists(self):
         today_playlists_key = 'playlists_%s' % datetime.now().date()
