@@ -29,11 +29,12 @@ nosetests.xml
 # Translations
 *.mo
 
-# Eclipse
+# Eclipse/Editor
 __pycache__
 .settings
 .project
 .pydevproject
+.tags
 
 # google-api-python-client-gae-x.y
 apiclient

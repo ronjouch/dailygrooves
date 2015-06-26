@@ -18,7 +18,7 @@ If you do not want to use [my DailyGrooves instance](http://www.dailygrooves.org
     1. From the *API Access* section of your [Google APIs Console](https://code.google.com/apis/console/), obtain your `client_secrets.json` file, and extract it to the `dailygrooves` app subfolder, next to `dailygrooves.py`.
     2. Tweak the cron update time in `cron.yaml` to your liking.
     3. Put your sources in `SOURCE_URLS`. Sources can be any kind of text, I'm not requiring any format (HTML, RSS, whatever), I just read text and run a regex on it.
-7. Deploy with `/path/to/your/appcfg.py --oauth2 update /path/to/dailygrooves/dailygrooves/`
+7. Deploy with `python2 /path/to/your/appcfg.py update /path/to/dailygrooves/dailygrooves/`
 8. Trigger an initial manual crawl by opening `YOURAPPURL/fetch` in your browser (necessary to cache an OAuth2 refresh token), and ensure 2 hours later that your cron job runs fine.
 
 As of February 2015, DailyGrooves runs fine on Python 2.7 / GAE 1.9.17 / GAE-Python-Client 1.1.

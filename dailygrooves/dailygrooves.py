@@ -15,16 +15,13 @@ from apiclient.discovery import build
 from apiclient.errors import HttpError
 from google.appengine.api import memcache, taskqueue, users
 from google.appengine.ext import db
+from google.appengine.runtime.apiproxy_errors import DeadlineExceededError
 from oauth2client.client import AccessTokenRefreshError
 from oauth2client.appengine import CredentialsModel, StorageByKeyName
 
 from appengine_override import \
     OAuth2DecoratorFromClientSecrets_ApprovalPromptForce
 
-# We hit once DEE3 once in a while, and maybe another one.
-from google.appengine.runtime import DeadlineExceededError as DEE1
-from google.appengine.api.urlfetch_errors import DeadlineExceededError as DEE2
-from google.appengine.runtime.apiproxy_errors import DeadlineExceededError as DEE3
 
 CLIENT_SECRETS = join(dirname(__file__), 'client_secrets.json')
 YOUTUBE_RW_SCOPE = "https://www.googleapis.com/auth/youtube"
@@ -36,7 +33,8 @@ YOUTUBE = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION)
 # honor additional **kwargs like approval_prompt='force', and it *has* to be
 # set at init time, so I built this slightly modified version, which just
 # adds one parameter. Better ways to do that very welcome.
-DECORATOR = OAuth2DecoratorFromClientSecrets_ApprovalPromptForce(CLIENT_SECRETS, YOUTUBE_RW_SCOPE)
+DECORATOR = OAuth2DecoratorFromClientSecrets_ApprovalPromptForce(
+                                             CLIENT_SECRETS, YOUTUBE_RW_SCOPE)
 
 SOURCE_URLS = open(join(dirname(__file__), 'SOURCE_URLS')).readlines()
 TEST_VIDEOS = ['T4z4OrPmZgA', 'T4z4OrPmZgA', 'T4z4OrPmZgA', '7mpBD1Gi_0E',
@@ -123,7 +121,7 @@ class FetchWorker(RequestHandler):
             |                             # or
             youtu\.be)/                   # youtu.be
             (?:embed/|watch\?v=)          # /embed/... or /watch?v=...
-            ([^\s\"\?&#]+)                # capture & stop at whitespace " ? & #
+            ([^\s\"\?&#]+)                # capture&stop at whitespace " ? & #
             ''', VERBOSE)
 
             for url in SOURCE_URLS:
@@ -162,7 +160,7 @@ class FetchWorker(RequestHandler):
         Creates a new playlist on YouTube and persist it as a Playlist
         instance in datastore.
         '''
-
+        now_date = datetime.now().date()
         print "create_playlist start"
         credentials = StorageByKeyName(
             CredentialsModel, self.user_id, 'credentials').get()
@@ -171,8 +169,8 @@ class FetchWorker(RequestHandler):
         print "create_playlist authorized creds"
         request = YOUTUBE.playlists().insert(
             part="snippet,status",
-            body={'snippet': {'title': "DailyGrooves %s" % datetime.now().date(),
-                              'description': "DailyGrooves %s" % datetime.now().date()},
+            body={'snippet': {'title': "DailyGrooves %s" % now_date,
+                              'description': "DailyGrooves %s" % now_date},
                   'status': {'privacyStatus': 'public'}
                   }
         )
@@ -214,18 +212,21 @@ class FetchWorker(RequestHandler):
                     nb_videos_inserted += 1
                 # https://cloud.google.com/appengine/articles/deadlineexceedederrors
                 except HttpError:
-                    print "  %s: KO, inserting %s failed" % (nb_videos_inserted, video)
-                except DEE1:
-                    print "  %s: KO, inserting %s failed with DEE1" % (nb_videos_inserted, video)
-                except DEE2:
-                    print "  %s: KO, inserting %s failed with DEE2" % (nb_videos_inserted, video)
-                except DEE3:
-                    print "  %s: KO, inserting %s failed with DEE3" % (nb_videos_inserted, video)
+                    print "  %s: KO, inserting %s failed" % \
+                        (nb_videos_inserted, video)
+                except DeadlineExceededError:
+                    print "  %s: KO, inserting %s failed with DEE" % \
+                        (nb_videos_inserted, video)
                 except AccessTokenRefreshError:
                     print "  %s: KO, access token refresh error on %s" % \
                         (nb_videos_inserted, video)
+                except:
+                    print "  %s KO, other exception on %s" % \
+                        (nb_videos_inserted, video)
 
-                sleep(1)  # Seems required to avoid YT-thrown exception, and might help with DEEs
+                # Seems required to avoid YT-thrown exception,
+                # and might help with DeadlineExceededError
+                sleep(2)
 
     def memcache_today_playlists(self):
         today_playlists_key = 'playlists_%s' % datetime.now().date()
@@ -250,10 +251,12 @@ class GetPlaylistJs(RequestHandler):
         if recent_playlists is None:
             recent_playlists = Playlist.all().order('-date').fetch(limit=5)
 
-        dgjs = 'dailygrooves = {"playlists":['
-        for playlist in recent_playlists:
-            dgjs += '["' + unicode(playlist.date.date()) + '","' + playlist.id + '"],'
-        dgjs += ']};'
+        dgjs_start = 'dailygrooves = {playlists:['
+        dgjs_mid = ','.join('["{0}","{1}"]'.format(pl.date.date(), pl.id)
+                            for pl in recent_playlists)
+        dgjs_end = ']};'
+        dgjs = '{0}{1}{2}'.format(dgjs_start, dgjs_mid, dgjs_end)
+
         self.response.headers['Content-Type'] = 'application/javascript'
         self.response.write(dgjs)
 
