@@ -45,7 +45,7 @@
       .righttext {float: right;}
       #videoTitle {text-align: center; width: 853px; height: 20px; background: #222; margin: auto; color: white; padding: 6px 0; border-radius: 3px 3px 0 0;}
       #player {margin: 10px 0 3px 0; height: 500px;}
-      #player iframe {border: none; -moz-box-shadow: 0px 0px 10px #AAA; -webkit-box-shadow: 0px 0px 10px #AAA; box-shadow: 0px 0px 10px #AAA;}
+      #player iframe {border: none;}
       #leftbuttongroup {transition: left 1s; -webkit-transition: left 1s; top:40%; position:fixed; left:-50%; z-index:100;}
       #rightbuttongroup {transition: right 1s; -webkit-transition: right 1s; top:40%; position:fixed; right:-50%; z-index:100;}
       #leftbuttongroup div {float: left; clear: left; -webkit-border-top-right-radius: 3px; -webkit-border-bottom-right-radius: 3px; -moz-border-radius-topright: 3px; -moz-border-radius-bottomright: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px;}
@@ -55,7 +55,7 @@
       .leftbuttongroup-visible {transition: left 1s; -webkit-transition: left 1s; left: 0% !important;}
       .rightbuttongroup-visible {transition: right 1s; -webkit-transition: right 1s; right: 0% !important;}
       .display-none {display: none !important;}
-      #playlists {font-size: 12px; margin-top: 15px;}
+      #playlists {font-size: 12px; margin-top: 30px;}
       #playlists a, #playlists span {margin-right: 20px; cursor: pointer;}
       #contact {font-size: 12px; margin-bottom: 20px;}
       #leftcontact {float: left; width: 620px; text-align: left;}
@@ -74,7 +74,8 @@
       var player, playedOnce = false, goingBack = false;
       function onYouTubeIframeAPIReady() {
         player = new YT.Player('playeriframe', {
-          events: {'onStateChange': onPlayerStateChange}
+          events: {'onStateChange': onPlayerStateChange,
+                   'onError': onError}
         });
       }
       function videoShouldBeSkipped(title, duration) {
@@ -88,6 +89,9 @@
           }
         }
         return false;
+      }
+      function onError(event) {
+        (goingBack) ? previous() : next();
       }
       function onPlayerStateChange(event) {
         var playerState = player.getPlayerState();
@@ -126,7 +130,7 @@
           player.playVideo();
         }
       }
-      function previous() {player.previousVideo();}
+      function previous() {goingBack = true; player.previousVideo();}
       function next() {player.nextVideo();}
       function setPlaylist(playlistId) {
         document.getElementById("playeriframe")
@@ -221,7 +225,7 @@
         </div>
         <div id="rightcontact">
           <p><strong>Feedback?</strong></p>
-          <p><a href="https://twitter.com/ronjouch">@ronjouch</a><br /><a href="https://twitter.com/oyomastaz">@oyomastaz</a></p>
+          <p><a href="https://twitter.com/ronjouch">@ronjouch</a></p>
         </div>
       </div>
     </div>
