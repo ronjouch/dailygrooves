@@ -21,7 +21,7 @@ If you do not want to use [my DailyGrooves instance](http://www.dailygrooves.org
 7. Deploy with `python2 /path/to/your/appcfg.py update /path/to/dailygrooves/dailygrooves/`
 8. Trigger an initial manual crawl by opening `YOURAPPURL/fetch` in your browser (necessary to cache an OAuth2 refresh token), and ensure 2 hours later that your cron job runs fine.
 
-As of February 2015, DailyGrooves runs fine on Python 2.7 / GAE 1.9.17 / GAE-Python-Client 1.1.
+As of November 2015, DailyGrooves runs fine on Python 2.7 / GAE 1.9.28 / GAE-Python-Client 1.1.
 
 ## Getting involved
 
